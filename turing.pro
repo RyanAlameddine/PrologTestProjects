@@ -1,14 +1,16 @@
 
 %same as the turing predicate but with a simpler-to-read output
-%Note that Left0 is reversed (first element is closest to head)
-turingMachine(Q0, L0, H0, R0, Tape) :- 
+runMachine(Q0, L0, H0, R0, Tape) :- 
     reverse(L0, L0R),
     turing(Q0, L0R, H0, R0, _, LF, HF, RF),
     reverse(LF, LFR),
     append(LFR, [HF|RF], Tape).
-    
+
+%actual turing machine predicate without the ease-of-use layer in front
+%note that Left input is reversed (head of list is closest element to head of turing machine)
 turing(qf, LF, HF, RF, qF, LF, HF, RF). %qf is exit condition, '-' is blankspace
-turing(Q0, L0, H0, R0, QF, LF, HF, RF) :- %writeState(Q0, L0, H0, R0),
+turing(Q0, L0, H0, R0, QF, LF, HF, RF) :- 
+    writeState(Q0, L0, H0, R0), %writes each intermediate state (optional)
     rule(Q0, H0, HNew, Direction, Q1), 
     tapeMovement(Direction, L0, HNew, R0, L1, H1, R1), !,
     turing(Q1, L1, H1, R1, QF, LF, HF, RF).
