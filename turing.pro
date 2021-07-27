@@ -1,6 +1,8 @@
+%CALL TURING MACHINE WITH DISPLAYEXECUTETAPE
+
 
 %same as the turing predicate but with a simpler-to-read output
-runMachine(Q0, L0, H0, R0, Tape) :- 
+displayExecuteTape(Q0, L0, H0, R0, Tape) :- 
     reverse(L0, L0R),
     turing(Q0, L0R, H0, R0, _, LF, HF, RF),
     reverse(LF, LFR),
@@ -22,6 +24,11 @@ tapeMovement(right, L0     , H0, []     , [H0|L0], - , []     ).
 tapeMovement(left , [HF|L0], H0, R0     , L0     , HF, [H0|R0]).
 tapeMovement(left , []     , H0, R0     , []     , - , [H0|R0]).
 
+%code golf turing machine (just for the memes):
+t(f,S,f-S).
+t(S,E-I-T,P):-r(S,I,U,D,O),m(D,E,U,T,F),t(O,F,P).
+m(r,L,H,R/F,L/H-F-R).
+m(l,L/H,I,R,L-H-R/I).
 
 
 % turingMachine(Q0, Left0, Head0, Right0, TapeOut) :- 
